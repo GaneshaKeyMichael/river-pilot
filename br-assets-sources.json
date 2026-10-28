@@ -1,0 +1,137 @@
+{
+  "retrieved": "2026-10-27",
+  "sceneryRevisionDate": "2026-10-28",
+  "imagery": {
+    "provider": "USGS / USDA, The National Map NAIP Plus",
+    "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer",
+    "publicDomainStatement": "The service description identifies free downloads of public-domain orthoimagery.",
+    "coreAcquisitionDate": "2023-05-03",
+    "coreNativeResolutionMetres": 0.3,
+    "coreExportResolutionMetres": 1.625,
+    "overviewExportResolutionMetres": 5.3711,
+    "tiles": 13,
+    "crs": "EPSG:26915",
+    "note": "Historical imagery fixes actual roads, vegetation, industrial sites, roofs and shoreline texture positions. It does not provide current-day conditions or 3D facade photography. Tile manifest carries exact server-returned bounds.",
+    "downtownDetailExportResolutionMetres": 0.5859375,
+    "downtownDetail": {
+      "url": "br-assets-kidd-detail.jpg",
+      "boundsWorld": {
+        "minX": 650,
+        "minZ": -1100,
+        "maxX": 1250,
+        "maxZ": 100
+      },
+      "pixels": [
+        1024,
+        2048
+      ],
+      "acquisitionDate": "2023-05-03",
+      "method": "USGS server export in EPSG:26915, 600 by 1200 metres, aspect ratio preserved. The source-native resolution is 0.3m; export resolution is 0.5859375m per pixel. Detail depicts actual levee surface markings and vegetation; no stairs were invented.",
+      "sourceRequest": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage?bbox=673498.8122536675,3368818.4053410613,674098.8122536675,3370018.4053410613&bboxSR=26915&imageSR=26915&size=1024,2048&format=jpg&compressionQuality=92&adjustAspectRatio=false&interpolation=RSP_BilinearInterpolation&f=json"
+    }
+  },
+  "buildings": {
+    "provider": "EBRGIS, Department of Information Services",
+    "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Building_Footprint/MapServer/0",
+    "metadata": "https://city.brla.gov/gis/metadata/BUILDING.html",
+    "count": 5617,
+    "countMeaning": "Raw exported source records, before detailed-model substitutions and unsupported-footprint omissions; not a rendered generic-building count.",
+    "sourcedPositiveHeightCount": 4932,
+    "missingHeightCount": 685,
+    "sourcedGroundElevationCount": 4979,
+    "reconciliation": "Every queried source OBJECTID is present once in the export.",
+    "scope": "Building polygons intersecting a 1600-metre buffer of the full East Baton Rouge Parish Mississippi route. The service covers EBR Parish, not West Baton Rouge Parish.",
+    "heightTreatment": "HEIGHT_FEET converted to metres. Missing or nonpositive source heights remain null. Published metadata does not establish the ground-elevation vertical datum.",
+    "currency": "Best available in the source; no unified survey/capture date supplied.",
+    "copyright": "EBRGIS; Department of Information Services",
+    "renderingTreatment": {
+      "foundationSupport": "Generic wall bases sample the actual rendered terrain triangles along the footprint perimeter and embed 0.08 m. This uses scene support heights instead of assuming the source ground-elevation field shares the rendering datum.",
+      "unsupportedGenericFootprintsOmitted": 9,
+      "genericBuildingsRendered": 5352,
+      "rawFootprintsReplacedByCustomModels": 256,
+      "countReconciliation": "5617 raw source records = 5352 generic buildings + 256 custom-model replacements + 9 unsupported omissions. A replacement count describes source records, not the number of meshes or individual decorative model parts.",
+      "unsupportedGenericFootprintIds": [337085, 337084, 337083, 303148, 238187, 238188, 238186, 160843, 303149],
+      "omissionBreakdown": "Seven footprints have no rendered land at their center; two additional footprints cross unsupported shoreline terrain.",
+      "omissionRule": "Omit a generic extrusion if its center or sampled perimeter has no rendered land support. Mapped water polygons are not filled with land to support a building.",
+      "detailedSubstitutions": "Selected civic, refinery and hotel footprints are excluded from generic extrusions and replaced with landmark models. The 252 circular refinery equipment footprints are part of the raw 5617-record export, not additional survey records.",
+      "limits": "Supported foundations do not establish construction-grade vertical accuracy. Source imagery, footprints and terrain have different capture dates."
+    }
+  },
+  "terrainAndLevees": {
+    "provider": "USGS 3DEP",
+    "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+    "sourceExportResolutionMetres": [13.816242603710938, 13.814195254765187],
+    "sourceMetadata": "br-terrain-summary.json",
+    "baseMeshMetadata": "br-terrain-mesh-summary.json",
+    "nearBankBaseMeshSpacingMetres": 14,
+    "localRefinement": "Subdivide existing land triangles with centers within 25 m of mapped levee alignments. Interior midpoints sample the same 13.8 m DEM; boundary midpoints preserve the existing triangle edge height to avoid seams.",
+    "verticalScale": 1,
+    "waterStageReferenceMetres": 4,
+    "limits": "Refinement improves interpolation of existing elevations; it is not a higher-resolution survey and does not establish exact levee crest elevations. Narrow stairs, paths, retaining walls and present-day flood protection conditions are not resolved. The gameplay water stage is not a live gauge reading. Mapped shoreline adaptation in the base mesh is documented separately in br-terrain-mesh-summary.json."
+  },
+  "bridgeAxes": {
+    "url": "https://maps.brla.gov/gis/rest/services/Infrastructure/Bridge/MapServer/0",
+    "method": "Major axis of mapped bridge footprint; intersection with mapped Mississippi water polygon locates the crossing center. The EBR footprint does not include all western approaches.",
+    "modelLimit": "Truss members, piers and approach grades are visual reconstructions. Deck heights are illustrative and are not verified navigation clearances."
+  },
+  "bridgeDimensions": [
+    {
+      "name": "Huey P. Long / O. K. Allen Bridge, Baton Rouge",
+      "source": "Louisiana DOTD Historic Bridge Management Plan",
+      "url": "https://dotd.la.gov/media/dbuegte2/mississippi-river-huey-p-long-bridge-160802a_051880.pdf",
+      "detail": "Five-span continuous/cantilevered Warren through truss, central railway and outside highway decks; main truss length 3326 ft. This is the Baton Rouge bridge, not the similarly named Jefferson Parish bridge."
+    },
+    {
+      "name": "Horace Wilkinson Bridge, I-10",
+      "source": "University of Illinois MAE report 09-02, bridge 46",
+      "url": "https://mae.cee.illinois.edu/publications/reports/Report09-02.pdf",
+      "detail": "Six I-10 lanes, cantilever truss, longest span 1235 ft and superstructure length 4550 ft. Overall access ramps are not reconstructed."
+    }
+  ],
+  "landmarks": {
+    "industrialAndHotelReferenceNotes": "br-landmark-reference-notes.json",
+    "industrialAndHotelSummary": "252 source-positioned refinery equipment models and L’Auberge hotel/casino/garage/skybridge. Official facility and builder references establish identity and major architectural facts; equipment details, facade treatment and the modeled 43.2 m hotel height are approximations.",
+    "civicReferenceNotes": "br-civic-reference-notes.json",
+    "civicRevisionSummary": "Tiger Stadium has separate upper grandstands, west press box and south expansion at its real inland position. The State Capitol uses documented 137.16 m overall height with reconstructed Art Deco setbacks; the Old State Capitol has reconstructed cruciform massing and eight towers. Both river bridges have differentiated truss, portal, bracing and approach geometry. Individual dimensions and ornament are visual estimates except where the reference notes explicitly identify measured or documented values.",
+    "civicSceneEpoch": "Aligned with the 2023 aerial context. Tiger Stadium uses the earlier north video board rather than claiming the 2024 retrofit. Structural tests validate geometry and placement, not photographic identity.",
+    "positions": "https://maps.brla.gov/gis/rest/services/Infrastructure/Tourist_Venue/MapServer/0",
+    "capitolHeight": "https://house.louisiana.gov/pubinfo/VirtualTour/Default.htm",
+    "capitolHeightMetres": 137.16,
+    "capitolModelLimit": "The source footprint's height describes the base rather than the complete tower. A separate tower reconstruction uses the documented 450-ft total height; ornament and massing are approximations.",
+    "oldCapitol": "EBRGIS building OBJECTID 150960, source height 86 ft / 26.213 m; facade reconstruction is approximate.",
+    "kiddStatus": "https://www.usskidd.com/plan-your-visit/uss-kidd-overhaul-2024-25/",
+    "kiddNote": "The official museum site reports the ship away in Houma and an expected return during spring 2027. The simulation reconstructs USS KIDD at its normal berth as a historical riverfront view; it does not assert current presence.",
+    "leveeLettering": {
+      "text": "BATON ⚜ ROUGE",
+      "type": "Red paint on the sloping concrete levee revetment",
+      "centerWorld": {
+        "x": 865.5,
+        "z": -1090.125
+      },
+      "centerLonLat": {
+        "lon": -91.19080906587557,
+        "lat": 30.449707761279235
+      },
+      "axisWorld": {
+        "start": {
+          "x": 862.5,
+          "z": -1141.75
+        },
+        "end": {
+          "x": 868.5,
+          "z": -1038.5
+        }
+      },
+      "approximateLengthM": 103.4,
+      "approximateGlyphHeightM": 9,
+      "relationshipToKidd": "Approximately 600 m north of the historical USS KIDD berth.",
+      "orientation": "Reads north to south when seen from the river; letter tops face east, uphill.",
+      "positionSource": "Public USDA/USGS NAIP aerial imagery acquired May 3, 2023. Coordinates and dimensions were visually estimated from a georeferenced export, not surveyed.",
+      "sourceRequest": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage?bbox=673598.8122536675,3369868.4053410613,673848.8122536675,3370268.4053410613&bboxSR=26915&imageSR=26915&size=1000,1600&format=jpg&compressionQuality=96&adjustAspectRatio=false&interpolation=RSP_BilinearInterpolation&f=image",
+      "corroboration": "Downtown Development District, Reconnecting to the River, Landmarks Plan p22, describes huge red Baton Rouge letters on the concrete revetment.",
+      "corroborationUrl": "https://downtownbatonrouge.org/uploads/docs/BRR_ExecReport_092906_sm_part1.pdf",
+      "modelMethod": "Original canvas-painted bold sans-serif lettering and vector fleur-de-lis. Paint mesh is clipped to the actual rendered terrain triangles; glyph outlines, spacing and paint color are approximate.",
+      "assetPolicy": "No Google Maps imagery is embedded, traced into a game texture, or redistributed. Position evidence and runtime scenery imagery come from public USGS/USDA exports."
+    }
+  }
+}

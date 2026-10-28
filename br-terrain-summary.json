@@ -1,0 +1,27 @@
+{
+  "width": 1536,
+  "height": 2896,
+  "bounds": {
+    "minX": -13384.132007067557,
+    "maxX": 7837.6166322324425,
+    "minZ": -24771.84850283852,
+    "maxZ": 15234.06095496146
+  },
+  "utmExtent": {
+    "xmin": 659464.6802466,
+    "ymin": 3353684.3443861,
+    "xmax": 680686.4288859,
+    "ymax": 3393690.2538439,
+    "spatialReference": {
+      "wkid": 26915,
+      "latestWkid": 26915
+    }
+  },
+  "minElevation": 0.12150000035762787,
+  "maxElevation": 63.648067474365234,
+  "source": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+  "sourceRequest": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?f=json&bbox=659464.6802466%2C3353684.3443861%2C680686.4288859%2C3393690.2538439&bboxSR=26915&imageSR=26915&size=1536%2C2896&format=tiff&pixelType=F32&noData=-9999&adjustAspectRatio=false&interpolation=RSP_BilinearInterpolation&renderingRule=%7B%22rasterFunction%22%3A+%22None%22%7D",
+  "dataResolutionM": 13.816242603710938,
+  "waterElevation": 4,
+  "note": "USGS bare-earth elevation sampled to a 13.8m grid. Water level is a gameplay reference, not a live gauge reading."
+}

@@ -1,0 +1,71 @@
+{
+  "title": "Baton Rouge civic landmarks: source and reconstruction notes",
+  "updated": "2026-10-28",
+  "sceneContext": "Architectural reconstruction aligned with the public 2023 NAIP aerial imagery used by the simulation. No Google imagery is embedded. Models are procedural geometry, not photogrammetry or engineering models.",
+  "coordinateSystem": {"epsg": 26915, "originE": 672848.8122536675, "originN": 3368918.4053410613, "worldX": "Easting minus originE", "worldZ": "originN minus northing", "vertical": "Rendered terrain surface minus simulated water stage; landmark foundations sample the rendered terrain."},
+  "sharedSources": [
+    {"title": "East Baton Rouge GIS building footprints", "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Building_Footprint/MapServer/0", "use": "Mapped building locations, footprint extents, and HEIGHT_FEET where available. Height fields do not necessarily capture every tower or upper deck."},
+    {"title": "USGS NAIP public imagery", "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer", "use": "2023 aerial roof forms, stadium field orientation and extent. Reference crops are not additional runtime assets."}
+  ],
+  "landmarks": [
+    {
+      "name": "Louisiana State Capitol", "footprintId": 211881,
+      "modelAnchorWorld": {"x": 1182.0826665601926, "z": -1913.3922641095705},
+      "verifiedHeightM": 137.16,
+      "model": "Light limestone Art Deco tower with successive stepped shoulders, narrow vertical window bays, broad four-storey base, east/west legislative wings and south ceremonial stair.",
+      "sources": [
+        {"title": "Louisiana House of Representatives Capitol history and tour", "url": "https://house.louisiana.gov/pubinfo/VirtualTour/Default.htm", "use": "450-foot height, 34 floors, Art Deco form and official exterior photograph."},
+        {"title": "Louisiana House official Capitol exterior photograph", "url": "https://house.louisiana.gov/pubinfo/VirtualTour/capitol400.jpg", "use": "Tower proportions, wings, setbacks and facade rhythm; viewed as reference only."},
+        {"title": "Vertical Access Louisiana State Capitol building survey", "url": "https://vertical-access.com/wp-content/uploads/2016/12/Louisiana-State-Capitol.pdf", "use": "Four-storey base and limestone exterior context."}
+      ],
+      "limits": "Overall tower height is documented. Individual floor heights, wing elevations, stair dimensions, facade ornament and exact setback dimensions are visual estimates, not an architectural survey. The source building-footprint height describes a lower mass and was not used as the tower height."
+    },
+    {
+      "name": "Old State Capitol", "footprintId": 150960,
+      "modelAnchorWorld": {"x": 1038.5863888624008, "z": -747.5436031809077},
+      "mappedHeightM": 26.213,
+      "model": "Cruciform Gothic Revival massing with eight crenellated towers, the two western towers octagonal and the other six square, pointed river-facing window, lancet windows, pitched roofs and central monitor.",
+      "sources": [
+        {"title": "National Park Service Old Louisiana State Capitol nomination", "url": "https://npgallery.nps.gov/GetAsset/88e49975-c8a8-4594-b9e2-f86d3da05c00/", "use": "Cruciform plan, eight towers, western octagonal pair, square remaining towers, Gothic traceries and roof/monitor description."},
+        {"title": "Louisiana Secretary of State Old State Capitol", "url": "https://www.sos.la.gov/museums/louisianas-old-state-capitol", "use": "Site identity and official museum context."},
+        {"title": "Louisiana Old State Capitol museum history", "url": "https://louisianaoldstatecapitol.org/explore/the-history", "use": "Historic building context."}
+      ],
+      "limits": "26.213 m is the EBRGIS mapped height, not a fresh survey. Ornament, window layout, tower dimensions and colors are reconstructed. The historic nomination's dimensions differ from modern footprint bounds; modern mapped extents anchor this model."
+    },
+    {
+      "name": "LSU Tiger Stadium", "footprintId": 9110,
+      "fieldCenter": {"lon": -91.1838426850992, "lat": 30.412044972195265},
+      "modelAnchorWorld": {"x": 1601.551703066798, "z": 3073.790545713622},
+      "aerialEstimatedHeadingRadians": 0.397,
+      "mappedLowerStructureHeightM": 23.1648,
+      "estimatedModelMaximumHeightM": 58.6,
+      "model": "Regulation-sized open field and lower bowl, original north arched facade, separate east/west upper grandstands, west press box, curved south expansion, suites, floodlights and pre-2024 north video board.",
+      "sources": [
+        {"title": "LSU Athletics official Tiger Stadium facility history", "url": "https://lsusports.net/facilities/tiger-stadium", "use": "North horseshoe and closed lower bowl history, east upper deck in 2000, west rebuild completed 2006, south expansion opened 2014, north arched windows, west Tiger Stadium lettering, 80-by-27-foot former north video board and replacement in 2024."},
+        {"title": "EBRGIS stadium footprint query", "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Building_Footprint/MapServer/0/query?where=OBJECTID%3D9110&outFields=OBJECTID%2CHEIGHT_FEET&outSR=4326&f=pjson", "use": "Mapped footprint for stadium vegetation exclusion; HEIGHT_FEET=76 is the lower structure height, not a verified upper-deck maximum."}
+      ],
+      "limits": "Upper decks, support columns, seating rows, press box and lighting elevations are visual approximations. Geometry is recognizable massing rather than a seat-by-seat survey. The playing field remains at its actual inland location; camera height/zoom improves inspection without moving the stadium to the river. No 2024 scoreboard/LED retrofit is claimed in this 2023 aerial context."
+    }
+  ],
+  "bridges": [
+    {
+      "name": "Horace Wilkinson Bridge / I-10", "roadKey": "W INTERSTATE 10 HWY",
+      "modelCrossingCenterWorld": {"x": 376.2967718271986, "z": 47.47450418595291},
+      "mainSpanM": 376.428, "modeledSuperstructureLengthM": 1386.84,
+      "model": "Grey steel cantilever through-truss, paired raised cantilever peaks, six-lane roadway, transverse portals and upper lateral bracing, concrete piers and under-deck approach trusses.",
+      "sources": [
+        {"title": "University of Illinois MAE Center report 09-02", "url": "https://mae.cee.illinois.edu/publications/reports/Report09-02.pdf", "use": "Bridge type and principal span dimensions."},
+        {"title": "Modjeski and Masters Horace Wilkinson Bridge history", "url": "https://www.modjeski.com/about/history-timeline/1960-1969/horace-wilkinson-bridge/", "use": "Designer history and bridge form reference."}
+      ]
+    },
+    {
+      "name": "Huey P. Long Bridge / US 190", "roadKey": "AIRLINE HWY",
+      "modelCrossingCenterWorld": {"x": 105.99690006020376, "z": -7425.338802192363},
+      "mainSpanM": 258.4704, "modeledSuperstructureLengthM": 1791.9192,
+      "model": "Brown-red steel truss carrying central railway with roadway decks outside the main truss planes, transverse upper bracing, concrete supports and under-deck approach trusses.",
+      "sources": [{"title": "Louisiana DOTD Huey P. Long Bridge historic management plan", "url": "https://dotd.la.gov/media/dbuegte2/mississippi-river-huey-p-long-bridge-160802a_051880.pdf", "use": "Bridge type and principal span dimensions from the project's prior source study; current HTTP fetch can be restricted by the source."}]
+    }
+  ],
+  "bridgeLimits": "Axes are taken from official EBRGIS bridge polygons; crossing centers were intersected with the mapped Mississippi water polygon. Individual members, pier shapes and positions, approach grades, deck elevations and colors are visual reconstructions. Collision boxes are conservative game obstacles and remain at the prior georeferenced pier anchors. These models are not navigation-clearance or engineering data. Unverified interchange ramps are not invented.",
+  "validationScope": "Node geometry/placement tests and separate browser inspection are used. Structural checks do not certify photographic identity or architectural survey accuracy."
+}

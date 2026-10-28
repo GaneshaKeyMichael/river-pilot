@@ -1,0 +1,272 @@
+{
+  "flat": true,
+  "sourceUnchanged": true,
+  "losslessTerrainDeliverySplit": true,
+  "files": [
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "br-assets-aerial-0.jpg",
+      "bytes": 4017885,
+      "sha256": "fdc24cb81973b6961eaeb4e675066532225238c863c4809c4478e7aee8c1b188"
+    },
+    {
+      "path": "br-assets-aerial-1.jpg",
+      "bytes": 4004740,
+      "sha256": "0573554fcebc113bade10bdf4a472933c111132b7130c5197d2ecb38fe24aec0"
+    },
+    {
+      "path": "br-assets-aerial-2.jpg",
+      "bytes": 4113610,
+      "sha256": "c6199faa7a41104bd2c1f5ba8aa17fb27d44de53c55f2bb21e23c4023cdbb049"
+    },
+    {
+      "path": "br-assets-aerial-3.jpg",
+      "bytes": 5338401,
+      "sha256": "2a2d4dd9328ab2a0373c9f0d0f1012104de0f353a906ad6554507e43edb69385"
+    },
+    {
+      "path": "br-assets-aerial-4.jpg",
+      "bytes": 3845563,
+      "sha256": "2060ace4b14d61c1b216ee64cd3adaf32408b5141cb5797c6e11866dba9cb7c5"
+    },
+    {
+      "path": "br-assets-aerial-5.jpg",
+      "bytes": 5556285,
+      "sha256": "44880e6f499191a661ef8393a0d6c7a2e8fa7f6ba901195cd9751bb5464afd90"
+    },
+    {
+      "path": "br-assets-aerial-6.jpg",
+      "bytes": 4408484,
+      "sha256": "2295127161691c170cb6744465a899a9269cde33b31a2e161954728281a9978a"
+    },
+    {
+      "path": "br-assets-aerial-7.jpg",
+      "bytes": 5037311,
+      "sha256": "a6fb7df15eeceb17d2b859725b8b8700f451875473a622769bf2883ec97e08f8"
+    },
+    {
+      "path": "br-assets-buildings-summary.json",
+      "bytes": 112,
+      "sha256": "940b06cc48ca37bdfac5b9b8bd052c2ddd1db423c8d0dbc783f444a033475794"
+    },
+    {
+      "path": "br-assets-buildings.js",
+      "bytes": 2785248,
+      "sha256": "cf4766148cacef28f8cf09c90d4db079e4eba0fa69064a1e328d332dddae1701"
+    },
+    {
+      "path": "br-assets-imagery.js",
+      "bytes": 11990,
+      "sha256": "6b36c6d6a9c777193e831622c327820df514ea1fa4b87ce067ca14947a79b6c8"
+    },
+    {
+      "path": "br-assets-imagery.json",
+      "bytes": 11971,
+      "sha256": "4af1ba41fb6b1ed69d36cc21dc216ea9937436be6304804a19849cdf4dcb39a9"
+    },
+    {
+      "path": "br-assets-kidd-detail.jpg",
+      "bytes": 965399,
+      "sha256": "e6a10674fffb9affcf67e9416162d7a59d811b6fd277157e6d5d02b3cd711d02"
+    },
+    {
+      "path": "br-assets-metro-0.jpg",
+      "bytes": 1625187,
+      "sha256": "04b0cfd74208ff39f76f25e0463ae1b452bdc8f0da5df2c188be4a9bf02d9912"
+    },
+    {
+      "path": "br-assets-metro-1.jpg",
+      "bytes": 2017101,
+      "sha256": "b45710d4292bd9b9e4f4923f22625947e68aa008a81a35d0e26027683e59b97d"
+    },
+    {
+      "path": "br-assets-metro-2.jpg",
+      "bytes": 1703160,
+      "sha256": "39dda65843299d800723c01f3f5402eb38356988f7738cae32f690597ebbfa5a"
+    },
+    {
+      "path": "br-assets-metro-3.jpg",
+      "bytes": 2070287,
+      "sha256": "112b12fd685a22ec80971448df9b7943a62c39d0e679a6e58fe229937aac46b9"
+    },
+    {
+      "path": "br-assets-sources.json",
+      "bytes": 10985,
+      "sha256": "0717c600f68c1b1a8231be6398518b37955b5445d6ab71989f692414d12fc5fd"
+    },
+    {
+      "path": "br-civic-reference-notes.json",
+      "bytes": 8117,
+      "sha256": "8e0d24cc6e08b7794ed809f562f3b5d2b2d57110053349a6bf45f24ea6c37a33"
+    },
+    {
+      "path": "br-ground-support.js",
+      "bytes": 4175,
+      "sha256": "5458b39acda21dd108fc0b1cb1aa1111b545eec7b92472690cd8132066c8dcac"
+    },
+    {
+      "path": "br-industry.js",
+      "bytes": 15744,
+      "sha256": "51e7f6f0efe0bf47e35774cbf06db7cc652d37d311ba64b6a8318484bd0ace49"
+    },
+    {
+      "path": "br-kidd.js",
+      "bytes": 20026,
+      "sha256": "b41bd30035beb7daf913a3bc95dd089e9f08ca3d24b24815fd49b51f7e0c3a72"
+    },
+    {
+      "path": "br-landmark-reference-notes.json",
+      "bytes": 5842,
+      "sha256": "5b5ca545d7fbc2440e0ef2e5d8e931fec87aa13406a1a86f0dd06dac9e02c712"
+    },
+    {
+      "path": "br-landmarks.js",
+      "bytes": 24243,
+      "sha256": "437deb2a5bdf0cda722a2c25be852be9bf874ece7605f9255602f5d91c6eeb71"
+    },
+    {
+      "path": "br-levee-lettering.js",
+      "bytes": 4665,
+      "sha256": "2d5fda65b884f1c46723b9551d7387a3e27abbf636ec9c9f218560f21a4cc1a2"
+    },
+    {
+      "path": "br-levee-refinement.js",
+      "bytes": 4433062,
+      "sha256": "5093ff5b257d8e640dcf2825b36f64cf4fe8b8a624552e5c2db7b99c49ccb2c8"
+    },
+    {
+      "path": "br-scene.js",
+      "bytes": 13453,
+      "sha256": "f597b711193c762831e21fed339e31ec9af8eee742d1fa80c45af9caee3066c8"
+    },
+    {
+      "path": "br-terrain-mesh-summary.json",
+      "bytes": 2740574,
+      "sha256": "a23677b1c727bc59eef8be095d53b89f5887d9cca290803c831e6fcf43504b73"
+    },
+    {
+      "path": "br-terrain-summary.json",
+      "bytes": 1185,
+      "sha256": "829743a0c59c922b24a15eb909765cd040a056f2315c723bc4b8a69138d4c3dd"
+    },
+    {
+      "path": "controls.js",
+      "bytes": 2559,
+      "sha256": "255f2aef73be0b53d9c0fa4a386c236c810cac8d05aa2022c4e12527f3144a74"
+    },
+    {
+      "path": "fan-boat.js",
+      "bytes": 16317,
+      "sha256": "f2e99b1798dbb80583ef59c78a1df15f519230263fae7702b6ad97d07b48ad5c"
+    },
+    {
+      "path": "geodata.js",
+      "bytes": 624885,
+      "sha256": "ca8a7b719d54b01d13fe488418a3b0b472a8052c14a76d4033d6fce13b86c840"
+    },
+    {
+      "path": "index.html",
+      "bytes": 14094,
+      "sha256": "6c8dcef66e1c7cbfb541154d262b462f7dea88eb8d8b90603f0cd3f186f48be6"
+    },
+    {
+      "path": "main.js",
+      "bytes": 40010,
+      "sha256": "373370699b6c879346e2a716cedad86d49baef950afc9336b7589985e144cad7"
+    },
+    {
+      "path": "manrope-latin.woff2",
+      "bytes": 24532,
+      "sha256": "8c2def024c1bf31aacf3624ae3c4d701269b4ec3dc765c04830839f0d36b2d9e"
+    },
+    {
+      "path": "manrope-OFL.txt",
+      "bytes": 4387,
+      "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 9790,
+      "sha256": "1b183d1dafdd25218116d180f07a5abb7eb831a742d77332290da0bd706f289e"
+    },
+    {
+      "path": "river-ramps.js",
+      "bytes": 12763,
+      "sha256": "94c7765109f51a8091ae91e502af818194a142e2365a056eff1f6373c6b32263"
+    },
+    {
+      "path": "river.js",
+      "bytes": 3386,
+      "sha256": "f93c64f69062d8dd0ebd43186100540d3a9c702713d6468ecfb6d0b828b3210d"
+    },
+    {
+      "path": "Sky.js",
+      "bytes": 6902,
+      "sha256": "a34a43bea8744b8b0e4a0be237ebf0f5592061658a7d7cc33e9e3fa31c0b272b"
+    },
+    {
+      "path": "style.css",
+      "bytes": 20931,
+      "sha256": "f818f108ea2e519060ffd870848db89ff3b6358b55b943631dd48c40fc8910cc"
+    },
+    {
+      "path": "terrain-data-part-1.js",
+      "bytes": 6000142,
+      "sha256": "4871a632dede1e201e18c78447bda6a1d2fddfe11fab04a8a10e151d5a58debf"
+    },
+    {
+      "path": "terrain-data-part-2.js",
+      "bytes": 5862124,
+      "sha256": "121ea8a8bb01b50c2d9170a5e42ffde87936cc523f4ade74ca8691d645ef16f3"
+    },
+    {
+      "path": "terrain-mesh-part-2.js",
+      "bytes": 7961342,
+      "sha256": "b354955c37b094947c498d48aa499fdfd6b8f90569c117254e839fbacc5fd24e"
+    },
+    {
+      "path": "terrain-mesh-part-3.js",
+      "bytes": 1428145,
+      "sha256": "359c37e3a3ba5b962480245941ee41b51714cefc40d9de5e8459fd00b64508fd"
+    },
+    {
+      "path": "terrain-mesh.js",
+      "bytes": 7967255,
+      "sha256": "f11a66b6315ca7d8c43e9da98c39f51953144c23131e9b78203b1c3a926a4d02"
+    },
+    {
+      "path": "terrain.js",
+      "bytes": 1982,
+      "sha256": "346855d7eef2dd5d4aadd18aa8897a447ab6219292264ce491acd59d85b4abce"
+    },
+    {
+      "path": "three-LICENSE.txt",
+      "bytes": 1081,
+      "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
+    },
+    {
+      "path": "three.min.js",
+      "bytes": 669884,
+      "sha256": "170c6789f43217c96b3170f4b42fafe135de7f7cd48497a4218f9757ee1d49fa"
+    },
+    {
+      "path": "vessels.js",
+      "bytes": 33868,
+      "sha256": "ccdd9f0828610e78d7b3b2ed3752321bbfba69b3ac5181e14a317fe5f0331b1d"
+    },
+    {
+      "path": "Water.js",
+      "bytes": 11301,
+      "sha256": "8cf3514788f31b35a66f5947fcb0c948b1b4d9a943bddffe73f82124f783ed40"
+    },
+    {
+      "path": "world.js",
+      "bytes": 10958,
+      "sha256": "9a58952f9d5050159e11a8cfb5341603907344b8764507160d7b1a9bf459326d"
+    }
+  ]
+}

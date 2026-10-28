@@ -1,0 +1,73 @@
+{
+  "title": "ExxonMobil Baton Rouge and L’Auberge model provenance",
+  "prepared": "2026-10-28",
+  "coordinateSystem": "World coordinates are EPSG:26915 meters relative to E672848.8122536675 N3368918.4053410613; x east, z south.",
+  "groundSupport": "Ground structures sample the visible terrain mesh. Perimeter wall bases and support legs extend at least 0.15 meters into that terrain. Structures without mapped land support are omitted. The scene uses a gameplay water stage of 4 meters; this is not a current river-stage observation.",
+  "sources": [
+    {
+      "id": "ebr-buildings",
+      "url": "https://maps.brla.gov/gis/rest/services/Cadastral/Building_Footprint/MapServer/0",
+      "role": "Official East Baton Rouge municipal building and equipment footprints; recorded HEIGHT_FEET values. Source snapshot is br-assets-buildings.js."
+    },
+    {
+      "id": "usgs-naip",
+      "url": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer",
+      "role": "Public aerial imagery used for site massing and placement. Georeferenced imagery is documented in br-assets-imagery.json."
+    },
+    {
+      "id": "exxon-operations",
+      "url": "https://corporate.exxonmobil.com/locations/united-states/baton-rouge-operations",
+      "role": "Official location and identity of the Baton Rouge refining and petrochemical complex."
+    },
+    {
+      "id": "exxon-facilities",
+      "url": "https://corporate.exxonmobil.com/locations/united-states/baton-rouge-operations/our-facilities",
+      "role": "Official refinery and associated facility descriptions."
+    },
+    {
+      "id": "lauberge-official",
+      "url": "https://www.lbatonrouge.com/visit",
+      "role": "Official location at 777 L’Auberge Avenue, 12-story hotel and rooftop pool."
+    },
+    {
+      "id": "lauberge-builder",
+      "url": "https://manhattanconstructiongroup.com/manhattan-construction-company/Projects/lauberge-casino-hotel-baton-rouge/",
+      "role": "Primary construction source: 12-story hotel, 227-foot pedestrian skybridge, three-level parking garage."
+    },
+    {
+      "id": "lauberge-exterior-study",
+      "url": "https://www.sulc.edu/page/hotel-information75th-anniversary",
+      "imageUrl": "https://www.sulc.edu/assets/sulc/AlumniAffairs/laubergecasinopic.jpg",
+      "role": "Exterior photograph studied for cream and brown facade, grouped teal glazing and burgundy rooftop pergolas. The photograph is not bundled as a game texture."
+    }
+  ],
+  "landmarks": [
+    {
+      "name": "ExxonMobil Baton Rouge refinery",
+      "modelCenter": {"lon": -91.18347854101827, "lat": 30.483075448231755, "worldX": 1510, "worldZ": -4800},
+      "modeledRegionWorld": {"minX": 650, "maxX": 2400, "minZ": -5900, "maxZ": -3950},
+      "measuredBasis": "252 circular municipal footprints are replaced by tanks or slender process columns at their real centers, radii and recorded height values. The modeling region is a visual subset of the occupied plant, not a legal or surveyed property boundary.",
+      "inferences": "Tank versus process-column classification, roof types, platforms, ladders and schematic pipe-rack details are visual approximations. Three rack corridors follow the public aerial layout but do not represent an operational piping diagram. No equipment internals or current operating conditions are claimed.",
+      "viewPositionWorld": {"x": 450, "z": -4800},
+      "cameraHeightM": 45,
+      "viewValidation": "Mapped water, more than 120 meters of projected bank clearance before runtime obstacle avoidance."
+    },
+    {
+      "name": "L’Auberge Casino & Hotel",
+      "modelCenter": {"lon": -91.15179705790956, "lat": 30.345815530260257, "worldX": 4800, "worldZ": 10365},
+      "municipalFootprintIds": [161307, 161490],
+      "measuredBasis": "Garage and casino outlines use official municipal footprints. The casino podium uses the recorded 18.288-meter source height. The source footprint stem and public aerial locate the pedestrian connection; its modeled length is approximately 69.18 meters, consistent with the builder's 227 feet.",
+      "documentedArchitecture": "The primary builder confirms a 12-story hotel, three-level garage and pedestrian skybridge. The hotel mass occupies the southern wing of the northern footprint, beside the skybridge; the large northern rectangle remains a lower parking garage.",
+      "inferences": "The hotel tower is modeled at 43.2 meters (12 floors at 3.6 meters), not a surveyed height. Its slightly curved frontage, facade bay arrangement, cream/brown materials, burgundy trim, pergolas, rooftop pool and geometric L are simplified from public exterior and aerial reference. The garage is modeled at 10.8 meters. Casino glazing and pilasters follow the real footprint edges but their spacing is approximate.",
+      "sourceConflict": "Municipal feature 161307 records 12.802 meters and two floors, while the casino feature records thirteen floors. These attributes do not reliably separate the documented twelve-story hotel from the podium and garage, so they are not presented as the hotel's measured height or floor count.",
+      "viewPositionWorld": {"x": 4630, "z": 10900},
+      "cameraHeightM": 25,
+      "viewValidation": "Mapped water, more than 310 meters of projected bank clearance before runtime obstacle avoidance."
+    }
+  ],
+  "limitations": [
+    "Site positions and source footprints are geospatially grounded; the models are recognizable approximations, not photogrammetry or engineering as-built models.",
+    "Imagery, municipal footprints and elevation surveys have different capture dates. They do not prove every structure's current condition.",
+    "Unsupported municipal dock-like polygons in the water are omitted from generic buildings; this module does not replace them with invented office buildings or river docks."
+  ]
+}
