@@ -2,7 +2,7 @@
   "flat": true,
   "sourceUnchanged": false,
   "losslessTerrainDeliverySplit": true,
-  "version": "2.4-shoreline-detail",
+  "version": "2.5-map-audit",
   "files": [
     {
       "path": ".gitattributes",
@@ -21,8 +21,8 @@
     },
     {
       "path": "README.txt",
-      "bytes": 10048,
-      "sha256": "67ca7c74203aa97d7a59c9c4c89ad84e7d8c6d8da3aea070ec0ff04417940e2a"
+      "bytes": 10840,
+      "sha256": "5f21899716b58078b32782c51a42309b5988ebfce5e7a72b06bf8a4c1fe41521"
     },
     {
       "path": "Sky.js",
@@ -166,8 +166,8 @@
     },
     {
       "path": "br-scene.js",
-      "bytes": 14002,
-      "sha256": "f524bcd55c576c6a9ee197b5afd0e1faa0e33f29029fc2ddc78878e006e55569"
+      "bytes": 14185,
+      "sha256": "45618ada528f8ae51c7a99028dc2f2866c2381efee21f6f1e60ee0c8a0cd7b29"
     },
     {
       "path": "br-terrain-detail.js",
@@ -201,13 +201,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 14309,
-      "sha256": "645ccf2ca796cc4d41c5b4f18129a977631fd31a4e4dc30b1f523a8edbb1a0d1"
+      "bytes": 14565,
+      "sha256": "d36182dd1444d590b1129d2c82bcae55e5f29bf417370fe10a3cf9d72157779d"
     },
     {
       "path": "main.js",
-      "bytes": 40013,
-      "sha256": "6c910bff1f8f3042db6a8ed5943c480bcea7f82e483d7e12586da9f992ab4465"
+      "bytes": 40513,
+      "sha256": "69c92996c10c9d3e11079a2f1df8d1fdd4b48e65577c996d635d407762ac6227"
     },
     {
       "path": "manrope-OFL.txt",

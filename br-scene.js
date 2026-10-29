@@ -101,16 +101,19 @@ function create(group,renderer,helpers={}){
     mesh.instanceMatrix.needsUpdate=true;mesh.computeBoundingSphere();group.add(mesh);tile.trees=mesh;
   }
   function loadTile(tile){
-    tile.lastUsed=time;if(tile.texture)return Promise.resolve();if(tile.promise)return tile.promise;
+    tile.lastUsed=time;if(tile.texture&&tile.textureQuality===quality)return Promise.resolve();if(tile.promise)return tile.promise;
     const revision=tile.revision=(tile.revision||0)+1,requestedQuality=quality;
     tile.promise=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{
       if(revision!==tile.revision){resolve();return;}
       const max=Math.min(renderer.capabilities.maxTextureSize,requestedQuality==='high'?(tile.priority>10?3072:2048):1024),scale=Math.min(1,max/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
-      const tex=new T.CanvasTexture(canvas);tex.colorSpace=T.SRGBColorSpace;tex.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());tex.generateMipmaps=true;tile.texture=tex;tile.materials.forEach(m=>{m.map=tex;m.needsUpdate=true;});addVegetation(tile,canvas);resolve();
+      const tex=new T.CanvasTexture(canvas);tex.colorSpace=T.SRGBColorSpace;tex.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());tex.generateMipmaps=true;
+      const previous=tile.texture;tile.texture=tex;tile.textureQuality=requestedQuality;tile.materials.forEach(m=>{m.map=tex;m.needsUpdate=true;});previous?.dispose();addVegetation(tile,canvas);resolve();
     };image.onerror=()=>{if(revision!==tile.revision){resolve();return;}tile.promise=null;reject(Error('Could not load mapped aerial imagery '+tile.url));};image.src=root.RIVER_EMBEDDED_ASSETS?.[tile.url]||tile.url;});
     return tile.promise;
   }
-  function setQuality(value){if(value===quality)return;quality=value;for(const tile of tiles){tile.revision=(tile.revision||0)+1;tile.texture?.dispose();tile.texture=null;tile.promise=null;tile.materials.forEach(m=>{m.map=null;m.needsUpdate=true;});}lastUpdate=-1;}
+  // Keep the last usable aerial image during a quality change, including failed
+  // replacements. Revision tokens still prevent obsolete requests from winning.
+  function setQuality(value){if(value===quality)return;quality=value;for(const tile of tiles){tile.revision=(tile.revision||0)+1;tile.promise=null;}lastUpdate=-1;}
   function update(x,z,now){focus={x,z};time=now;if(now-lastUpdate<.8&&lastUpdate>=0&&Math.hypot(x-lastX,z-lastZ)<1000)return;lastUpdate=now;lastX=x;lastZ=z;
     for(const tile of tiles){const distance=distanceToBox(x,z,tile.bounds),visible=distance<8500;tile.meshes.forEach(m=>m.visible=visible);if(tile.trees)tile.trees.visible=distance<5500;if(visible&&distance<5500)loadTile(tile).catch(e=>console.warn(e.message));
       if(distance>11000&&(tile.texture||tile.promise)){tile.revision=(tile.revision||0)+1;tile.texture?.dispose();tile.texture=null;tile.promise=null;tile.materials.forEach(m=>{m.map=null;m.needsUpdate=true;});}

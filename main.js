@@ -110,6 +110,10 @@ function updateEffects(dt){
   checkpointGroup.children.forEach((buoy,i)=>{buoy.position.y=Math.sin(simTime*1.7+i)*.17;buoy.rotation.z=Math.sin(simTime+i)*.025;});
 }
 function isPaused(){return paused||[...document.querySelectorAll('dialog')].some(d=>d.open);}
+function clearCameraTerrain(position){
+  const ground=world.terrainAt?.(position.x,position.z);
+  if(Number.isFinite(ground))position.y=Math.max(position.y,ground+.75);
+}
 function updateCamera(dt,snap=false){
   const fwd=new THREE.Vector3(-Math.sin(state.heading),0,-Math.cos(state.heading));
   const elevation=state.y||0;
@@ -134,9 +138,15 @@ function updateCamera(dt,snap=false){
     desiredCamera.set(state.x+Math.sin(angle)*dist,elevation+Math.max(2,height),state.z+Math.cos(angle)*dist);
     lookTarget.set(state.x+fwd.x*(cameraMode===2?28:3.5),elevation+1.1,state.z+fwd.z*(cameraMode===2?28:3.5));
   }
+  const externalView=mode==='intro'||landmarkView||cameraMode!==1;
+  if(externalView)clearCameraTerrain(desiredCamera);
   const fov=landmarkView?Math.max(18,Math.min(75,(landmarkView.cameraFov||57)/zoom)):57;
   if(Math.abs(camera.fov-fov)>.01){camera.fov=fov;camera.updateProjectionMatrix();}
-  const smoothing=snap||(cameraMode===1&&!landmarkView)?1:1-Math.exp(-dt*8);camera.position.lerp(desiredCamera,smoothing);camTarget.lerp(lookTarget,smoothing);camera.lookAt(camTarget);
+  const smoothing=snap||(cameraMode===1&&!landmarkView)?1:1-Math.exp(-dt*8);camera.position.lerp(desiredCamera,smoothing);
+  // Smoothing can cross a bank even when both endpoint positions are clear.
+  // Keep the external camera above the visible terrain without moving the hull.
+  if(externalView)clearCameraTerrain(camera.position);
+  camTarget.lerp(lookTarget,smoothing);camera.lookAt(camTarget);
 }
 function gameStep(dt){
   const command=RiverControls.command(throttle,gear,keys,touch,dt);throttle=command.throttle;effectiveGear=command.effectiveGear;
@@ -254,7 +264,7 @@ try{
   if(!stops.some(stop=>/Downtown levee/.test(stop.name))){const target={x:891.882,y:9.954,z:-432.756};stops.push({name:'Downtown levee & riverwalk',s:RIVER.project(target.x,target.z).s,lookAt:target,viewPosition:{x:600.1,z:-422.4},viewDistance:290,cameraHeight:14});}
   stops.sort((a,b)=>a.s-b.s);locationStops=stops;syncRampLocation();
   renderer.compile(scene,camera);renderer.render(scene,camera);animate();Promise.resolve(world.ready).then(()=>{$('loading').hidden=true;$('welcome').hidden=false;}).catch(fail);
-  window.RiverPilot={getState:()=>({mode,paused:paused||isPaused(),weather,camera:landmarkView?'Landmark view':camNames[cameraMode],landmark:landmarkView?.name||null,checkpoint,throttle,gear,effectiveGear,currentKnots,x:state.x,z:state.z,s:state.s,speed:state.speed,hull:state.hull}),version:'2.4-shoreline-detail'};
+  window.RiverPilot={getState:()=>({mode,paused:paused||isPaused(),weather,camera:landmarkView?'Landmark view':camNames[cameraMode],landmark:landmarkView?.name||null,checkpoint,throttle,gear,effectiveGear,currentKnots,x:state.x,z:state.z,s:state.s,speed:state.speed,hull:state.hull}),version:'2.5-map-audit'};
 }catch(error){fail(error);}
 })();
 
