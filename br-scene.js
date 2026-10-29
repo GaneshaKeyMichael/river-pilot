@@ -105,7 +105,7 @@ function create(group,renderer,helpers={}){
     const revision=tile.revision=(tile.revision||0)+1,requestedQuality=quality;
     tile.promise=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{
       if(revision!==tile.revision){resolve();return;}
-      const max=Math.min(renderer.capabilities.maxTextureSize,requestedQuality==='high'?(tile.priority>1?3072:2048):1024),scale=Math.min(1,max/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
+      const max=Math.min(renderer.capabilities.maxTextureSize,requestedQuality==='high'?(tile.priority>10?3072:2048):1024),scale=Math.min(1,max/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
       const tex=new T.CanvasTexture(canvas);tex.colorSpace=T.SRGBColorSpace;tex.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());tex.generateMipmaps=true;tile.texture=tex;tile.materials.forEach(m=>{m.map=tex;m.needsUpdate=true;});addVegetation(tile,canvas);resolve();
     };image.onerror=()=>{if(revision!==tile.revision){resolve();return;}tile.promise=null;reject(Error('Could not load mapped aerial imagery '+tile.url));};image.src=root.RIVER_EMBEDDED_ASSETS?.[tile.url]||tile.url;});
     return tile.promise;

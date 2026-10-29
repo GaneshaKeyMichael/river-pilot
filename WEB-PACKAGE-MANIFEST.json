@@ -166,8 +166,8 @@
     },
     {
       "path": "br-scene.js",
-      "bytes": 14001,
-      "sha256": "49afeaead77f2a45678e7d74071e9d0723d7b9c1acf96af0752d3c50120a7213"
+      "bytes": 14002,
+      "sha256": "f524bcd55c576c6a9ee197b5afd0e1faa0e33f29029fc2ddc78878e006e55569"
     },
     {
       "path": "br-terrain-detail.js",
@@ -202,7 +202,7 @@
     {
       "path": "index.html",
       "bytes": 14309,
-      "sha256": "cc57418aeb13f6fc1c4b805e51da29e4c3f8069e773e2995d3fa575b749bb665"
+      "sha256": "645ccf2ca796cc4d41c5b4f18129a977631fd31a4e4dc30b1f523a8edbb1a0d1"
     },
     {
       "path": "main.js",
@@ -226,13 +226,13 @@
     },
     {
       "path": "river.js",
-      "bytes": 3428,
-      "sha256": "7d9e7032e3f0f45c0437c9170d3d0798b943b156b069e5a5b40356f7345df2a0"
+      "bytes": 3467,
+      "sha256": "88725102c2224b8046275c1447d9120ead221d62478fe448ba1e87a6dfd31151"
     },
     {
       "path": "shoreline.js",
-      "bytes": 3587,
-      "sha256": "ae6b86013bdf6dc361a1d9a240acadc7f462201ef2b47c6551d9c6d8074a9394"
+      "bytes": 4568,
+      "sha256": "b29e69517c52bc8caf3689230052c61ecd74aed968826fa7487152b413a0d811"
     },
     {
       "path": "style.css",
@@ -286,8 +286,8 @@
     },
     {
       "path": "vessels.js",
-      "bytes": 35387,
-      "sha256": "7263062d7f73e702ac3dc38487863e8df015902ee4c15e81f0a8040e7cdd39f4"
+      "bytes": 35642,
+      "sha256": "ef4443c6140096bd8b2a1dedc511da707bef026f9f004d242689e60876a94b3d"
     },
     {
       "path": "world.js",

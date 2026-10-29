@@ -228,6 +228,9 @@
   function constrainMappedShore(state,before,river,dt){
     if(!river.hullInWater||river.hullInWater(state.x,state.z,state.heading,PLAYER_SPEC.length,PLAYER_SPEC.width))return;
     const targetX=state.x,targetZ=state.z,turn=Math.atan2(Math.sin(state.heading-before.heading),Math.cos(state.heading-before.heading));
+    const vx=(targetX-before.x)/Math.max(dt,1e-6),vz=(targetZ-before.z)/Math.max(dt,1e-6);
+    const normals=river.shoreContact?.(targetX,targetZ,state.heading,PLAYER_SPEC.length,PLAYER_SPEC.width);
+    const impactSpeed=normals?normals.reduce((speed,n)=>Math.max(speed,vx*n.x+vz*n.z),0):Math.hypot(vx,vz);
     let lo=0,hi=1;
     if(river.hullInWater(before.x,before.z,before.heading,PLAYER_SPEC.length,PLAYER_SPEC.width)){
       for(let i=0;i<12;i++){const t=(lo+hi)/2;
@@ -235,7 +238,7 @@
       }
     }
     state.x=before.x+(targetX-before.x)*lo;state.z=before.z+(targetZ-before.z)*lo;state.heading=before.heading+turn*lo;
-    impact(state,Math.hypot(targetX-before.x,targetZ-before.z)/Math.max(dt,1e-6),.45);
+    impact(state,impactSpeed,.45);
     state.speed*=Math.exp(-7*dt);state.lateralSpeed*=Math.exp(-7*dt);state.turnRate*=.5;state.grounded=true;
   }
   function rampFrame(ramp,x,z){const fx=-Math.sin(ramp.heading),fz=-Math.cos(ramp.heading),rx=Math.cos(ramp.heading),rz=-Math.sin(ramp.heading),dx=x-ramp.x,dz=z-ramp.z;return {fx,fz,rx,rz,along:dx*fx+dz*fz,side:dx*rx+dz*rz};}
