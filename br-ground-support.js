@@ -46,6 +46,7 @@
       if(chunk.positions.length/3!==patch.sourceVertexCount||chunk.indices.length/3!==patch.sourceTriangleCount)throw Error('Levee refinement does not match the terrain source.');
       const remove=new Set(decode(patch.removedTrianglesB64,Uint32Array)),addedPositions=decode(patch.positionsB64,Float32Array),addedIndices=decode(patch.indicesB64,Uint32Array);
       const positions=new Float32Array(chunk.positions.length+addedPositions.length),indices=new Uint32Array(chunk.indices.length-remove.size*3+addedIndices.length);positions.set(chunk.positions);positions.set(addedPositions,chunk.positions.length);
+      if(patch.updatedVerticesB64){const vertices=decode(patch.updatedVerticesB64,Uint32Array),heights=decode(patch.updatedHeightsB64,Float32Array);if(vertices.length!==heights.length)throw Error('Terrain detail height update is incomplete.');for(let i=0;i<vertices.length;i++){if(vertices[i]>=patch.sourceVertexCount||!Number.isFinite(heights[i]))throw Error('Invalid terrain detail height.');positions[vertices[i]*3+1]=heights[i];}}
       let offset=0;for(let i=0;i<chunk.indices.length;i+=3)if(!remove.has(i/3)){indices[offset++]=chunk.indices[i];indices[offset++]=chunk.indices[i+1];indices[offset++]=chunk.indices[i+2];}indices.set(addedIndices,offset);
       return {...chunk,positions,indices};
     });

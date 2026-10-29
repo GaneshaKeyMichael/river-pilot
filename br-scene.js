@@ -12,7 +12,7 @@ function waterGeometry(){return new T.ShapeGeometry(G.waterPolygons.map(shapeFro
 function typed(base64,Type){const str=atob(base64),bytes=new Uint8Array(str.length);for(let i=0;i<str.length;i++)bytes[i]=str.charCodeAt(i);return new Type(bytes.buffer);}
 function distanceToBox(x,z,b){return Math.hypot(Math.max(b.minX-x,0,x-b.maxX),Math.max(b.minZ-z,0,z-b.maxZ));}
 function pointInside(x,z,ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;}return inside;}
-function isWater(x,z){return G.waterPolygons.some(p=>pointInside(x,z,p.outer)&&!(p.holes||[]).some(h=>pointInside(x,z,h)));}
+function isWater(x,z){return root.RIVER_SHORE?root.RIVER_SHORE.contains(x,z):G.waterPolygons.some(p=>pointInside(x,z,p.outer)&&!(p.holes||[]).some(h=>pointInside(x,z,h)));}
 function vegetationExcluded(x,z){return [...(root.BRLandmarks?.vegetationExclusions||[]),...(root.BRIndustry?.vegetationExclusions||[])].some(p=>pointInside(x,z,p.outer||p.ring)&&!(p.holes||[]).some(h=>pointInside(x,z,h)));}
 function create(group,renderer,helpers={}){
   const tiles=root.BR_IMAGERY.tiles.map(t=>({...t,texture:null,promise:null,materials:[],meshes:[],trees:null,lastUsed:0}));
@@ -24,10 +24,11 @@ function create(group,renderer,helpers={}){
   const sourceChunks=root.BR_TERRAIN_MESH?.chunks||[];
   if(!sourceChunks.length)throw Error('Baton Rouge terrain mesh was not loaded.');
   if(!root.BRGroundSupport)throw Error('Baton Rouge terrain support was not loaded.');
-  const chunks=root.BRGroundSupport.applyRefinement(sourceChunks.map(chunk=>({...chunk,tileUrl:chunk.tileUrl||chunk.url,positions:typed(chunk.positionsB64,Float32Array),indices:typed(chunk.indicesB64,chunk.indexType==='Uint16Array'?Uint16Array:Uint32Array)})),root.BR_LEVEE_REFINEMENT,typed);
+  const leveeChunks=root.BRGroundSupport.applyRefinement(sourceChunks.map(chunk=>({...chunk,tileUrl:chunk.tileUrl||chunk.url,positions:typed(chunk.positionsB64,Float32Array),indices:typed(chunk.indicesB64,chunk.indexType==='Uint16Array'?Uint16Array:Uint32Array)})),root.BR_LEVEE_REFINEMENT,typed);
+  const chunks=root.BRGroundSupport.applyRefinement(leveeChunks,root.BR_TERRAIN_DETAIL,typed);
   const support=root.BRGroundSupport.create(chunks),terrainAt=(x,z)=>support.heightAt(x,z);
   const groundAt=(x,z)=>terrainAt(x,z)??root.BR_TERRAIN.elevationAt(x,z)-waterElevation;
-  const diagnostics={terrain:'Visible triangle surface',leveeRefinement:root.BR_LEVEE_REFINEMENT?.evidence||null,buildings:{emitted:0,excluded:[],unsupported:[],maximumOldDemGap:0},foundationEmbedMeters:.08};
+  const diagnostics={terrain:'Visible triangle surface',terrainDetail:root.BR_TERRAIN_DETAIL?.evidence||null,leveeRefinement:root.BR_LEVEE_REFINEMENT?.evidence||null,buildings:{emitted:0,excluded:[],unsupported:[],maximumOldDemGap:0},foundationEmbedMeters:.08};
   for(const chunk of chunks){
     const tile=tileLookup.get(chunk.tileUrl||chunk.url);if(!tile)continue;
     const positions=chunk.positions,indices=chunk.indices;
@@ -95,22 +96,24 @@ function create(group,renderer,helpers={}){
     }
     if(!accepted.length)return;
     const geo=new T.PlaneGeometry(1,1),mat=new T.MeshStandardMaterial({map:helpers.foliageTexture(),alphaTest:.4,side:T.DoubleSide,roughness:1,color:0xa4af88});
-    const mesh=new T.InstancedMesh(geo,mat,accepted.length*2),dummy=new T.Object3D();let index=0;
-    for(const p of accepted)for(let side=0;side<2;side++){dummy.position.set(p.x,groundAt(p.x,p.z)+p.h*.5,p.z);dummy.rotation.set(0,p.angle+side*Math.PI/2,0);dummy.scale.set(p.w,p.h,1);dummy.updateMatrix();mesh.setMatrixAt(index++,dummy.matrix);}
+    const mesh=new T.InstancedMesh(geo,mat,accepted.length*3),dummy=new T.Object3D();let index=0;
+    for(const p of accepted)for(let side=0;side<3;side++){dummy.position.set(p.x,groundAt(p.x,p.z)+p.h*.5,p.z);dummy.rotation.set(0,p.angle+side*Math.PI/3,0);dummy.scale.set(p.w,p.h,1);dummy.updateMatrix();mesh.setMatrixAt(index++,dummy.matrix);}
     mesh.instanceMatrix.needsUpdate=true;mesh.computeBoundingSphere();group.add(mesh);tile.trees=mesh;
   }
   function loadTile(tile){
     tile.lastUsed=time;if(tile.texture)return Promise.resolve();if(tile.promise)return tile.promise;
+    const revision=tile.revision=(tile.revision||0)+1,requestedQuality=quality;
     tile.promise=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>{
-      const max=quality==='high'?2048:1024,scale=Math.min(1,max/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
+      if(revision!==tile.revision){resolve();return;}
+      const max=Math.min(renderer.capabilities.maxTextureSize,requestedQuality==='high'?(tile.priority>1?3072:2048):1024),scale=Math.min(1,max/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
       const tex=new T.CanvasTexture(canvas);tex.colorSpace=T.SRGBColorSpace;tex.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());tex.generateMipmaps=true;tile.texture=tex;tile.materials.forEach(m=>{m.map=tex;m.needsUpdate=true;});addVegetation(tile,canvas);resolve();
-    };image.onerror=()=>{tile.promise=null;reject(Error('Could not load mapped aerial imagery '+tile.url));};image.src=root.RIVER_EMBEDDED_ASSETS?.[tile.url]||tile.url;});
+    };image.onerror=()=>{if(revision!==tile.revision){resolve();return;}tile.promise=null;reject(Error('Could not load mapped aerial imagery '+tile.url));};image.src=root.RIVER_EMBEDDED_ASSETS?.[tile.url]||tile.url;});
     return tile.promise;
   }
-  function setQuality(value){if(value===quality)return;quality=value;for(const tile of tiles){tile.texture?.dispose();tile.texture=null;tile.promise=null;tile.materials.forEach(m=>{m.map=null;m.needsUpdate=true;});}lastUpdate=-1;}
+  function setQuality(value){if(value===quality)return;quality=value;for(const tile of tiles){tile.revision=(tile.revision||0)+1;tile.texture?.dispose();tile.texture=null;tile.promise=null;tile.materials.forEach(m=>{m.map=null;m.needsUpdate=true;});}lastUpdate=-1;}
   function update(x,z,now){focus={x,z};time=now;if(now-lastUpdate<.8&&lastUpdate>=0&&Math.hypot(x-lastX,z-lastZ)<1000)return;lastUpdate=now;lastX=x;lastZ=z;
     for(const tile of tiles){const distance=distanceToBox(x,z,tile.bounds),visible=distance<8500;tile.meshes.forEach(m=>m.visible=visible);if(tile.trees)tile.trees.visible=distance<5500;if(visible&&distance<5500)loadTile(tile).catch(e=>console.warn(e.message));
-      if(distance>11000&&tile.texture){tile.texture.dispose();tile.texture=null;tile.promise=null;tile.materials.forEach(m=>{m.map=null;m.needsUpdate=true;});}
+      if(distance>11000&&(tile.texture||tile.promise)){tile.revision=(tile.revision||0)+1;tile.texture?.dispose();tile.texture=null;tile.promise=null;tile.materials.forEach(m=>{m.map=null;m.needsUpdate=true;});}
     }
     for(const cell of buildingGroups.values()){const b=cell.bounds,visible=distanceToBox(x,z,{minX:b.min.x,maxX:b.max.x,minZ:b.min.z,maxZ:b.max.z})<6500;for(const mesh of cell.meshes)mesh.visible=visible;}
   }

@@ -1,12 +1,38 @@
 {
   "flat": true,
-  "sourceUnchanged": true,
+  "sourceUnchanged": false,
   "losslessTerrainDeliverySplit": true,
+  "version": "2.4-shoreline-detail",
   "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 86,
+      "sha256": "a8b212813e04a60f64ad703b968e1ca8de7a8c75b8f2b1fbe9e9510da985ebca"
+    },
     {
       "path": ".nojekyll",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2863,
+      "sha256": "5a29b85e3013eaf8e4c106e3206596df871bbb466fc5f74290dfccc793e96282"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 10048,
+      "sha256": "67ca7c74203aa97d7a59c9c4c89ad84e7d8c6d8da3aea070ec0ff04417940e2a"
+    },
+    {
+      "path": "Sky.js",
+      "bytes": 6902,
+      "sha256": "a34a43bea8744b8b0e4a0be237ebf0f5592061658a7d7cc33e9e3fa31c0b272b"
+    },
+    {
+      "path": "Water.js",
+      "bytes": 11301,
+      "sha256": "8cf3514788f31b35a66f5947fcb0c948b1b4d9a943bddffe73f82124f783ed40"
     },
     {
       "path": "br-assets-aerial-0.jpg",
@@ -95,8 +121,8 @@
     },
     {
       "path": "br-assets-sources.json",
-      "bytes": 10985,
-      "sha256": "0717c600f68c1b1a8231be6398518b37955b5445d6ab71989f692414d12fc5fd"
+      "bytes": 11520,
+      "sha256": "30cc3855c1373948489bb025af493d0c1bbad785f227f0a2723c0de42f286607"
     },
     {
       "path": "br-civic-reference-notes.json",
@@ -105,8 +131,8 @@
     },
     {
       "path": "br-ground-support.js",
-      "bytes": 4175,
-      "sha256": "5458b39acda21dd108fc0b1cb1aa1111b545eec7b92472690cd8132066c8dcac"
+      "bytes": 4610,
+      "sha256": "2aa605b9890772f94ef30e561f57ba4f470e80ade2463febbc95815326377b9f"
     },
     {
       "path": "br-industry.js",
@@ -140,8 +166,13 @@
     },
     {
       "path": "br-scene.js",
-      "bytes": 13453,
-      "sha256": "f597b711193c762831e21fed339e31ec9af8eee742d1fa80c45af9caee3066c8"
+      "bytes": 14001,
+      "sha256": "49afeaead77f2a45678e7d74071e9d0723d7b9c1acf96af0752d3c50120a7213"
+    },
+    {
+      "path": "br-terrain-detail.js",
+      "bytes": 7203414,
+      "sha256": "a42b4d52ab9f8055b3ab34aca56f5ce73436586aaa34cd6835ea1f9eb31c6bbe"
     },
     {
       "path": "br-terrain-mesh-summary.json",
@@ -170,18 +201,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 14094,
-      "sha256": "6c8dcef66e1c7cbfb541154d262b462f7dea88eb8d8b90603f0cd3f186f48be6"
+      "bytes": 14309,
+      "sha256": "cc57418aeb13f6fc1c4b805e51da29e4c3f8069e773e2995d3fa575b749bb665"
     },
     {
       "path": "main.js",
-      "bytes": 40010,
-      "sha256": "373370699b6c879346e2a716cedad86d49baef950afc9336b7589985e144cad7"
-    },
-    {
-      "path": "manrope-latin.woff2",
-      "bytes": 24532,
-      "sha256": "8c2def024c1bf31aacf3624ae3c4d701269b4ec3dc765c04830839f0d36b2d9e"
+      "bytes": 40013,
+      "sha256": "6c910bff1f8f3042db6a8ed5943c480bcea7f82e483d7e12586da9f992ab4465"
     },
     {
       "path": "manrope-OFL.txt",
@@ -189,9 +215,9 @@
       "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b"
     },
     {
-      "path": "README.txt",
-      "bytes": 9790,
-      "sha256": "1b183d1dafdd25218116d180f07a5abb7eb831a742d77332290da0bd706f289e"
+      "path": "manrope-latin.woff2",
+      "bytes": 24532,
+      "sha256": "8c2def024c1bf31aacf3624ae3c4d701269b4ec3dc765c04830839f0d36b2d9e"
     },
     {
       "path": "river-ramps.js",
@@ -200,13 +226,13 @@
     },
     {
       "path": "river.js",
-      "bytes": 3386,
-      "sha256": "f93c64f69062d8dd0ebd43186100540d3a9c702713d6468ecfb6d0b828b3210d"
+      "bytes": 3428,
+      "sha256": "7d9e7032e3f0f45c0437c9170d3d0798b943b156b069e5a5b40356f7345df2a0"
     },
     {
-      "path": "Sky.js",
-      "bytes": 6902,
-      "sha256": "a34a43bea8744b8b0e4a0be237ebf0f5592061658a7d7cc33e9e3fa31c0b272b"
+      "path": "shoreline.js",
+      "bytes": 3587,
+      "sha256": "ae6b86013bdf6dc361a1d9a240acadc7f462201ef2b47c6551d9c6d8074a9394"
     },
     {
       "path": "style.css",
@@ -222,6 +248,11 @@
       "path": "terrain-data-part-2.js",
       "bytes": 5862124,
       "sha256": "121ea8a8bb01b50c2d9170a5e42ffde87936cc523f4ade74ca8691d645ef16f3"
+    },
+    {
+      "path": "terrain-detail-provenance.json",
+      "bytes": 11583,
+      "sha256": "64ffc68181ddc88882e9de517f585ea4194c8d1f7a3e62dfe118a64b1c0b88ec"
     },
     {
       "path": "terrain-mesh-part-2.js",
@@ -255,18 +286,13 @@
     },
     {
       "path": "vessels.js",
-      "bytes": 33868,
-      "sha256": "ccdd9f0828610e78d7b3b2ed3752321bbfba69b3ac5181e14a317fe5f0331b1d"
-    },
-    {
-      "path": "Water.js",
-      "bytes": 11301,
-      "sha256": "8cf3514788f31b35a66f5947fcb0c948b1b4d9a943bddffe73f82124f783ed40"
+      "bytes": 35387,
+      "sha256": "7263062d7f73e702ac3dc38487863e8df015902ee4c15e81f0a8040e7cdd39f4"
     },
     {
       "path": "world.js",
-      "bytes": 10958,
-      "sha256": "9a58952f9d5050159e11a8cfb5341603907344b8764507160d7b1a9bf459326d"
+      "bytes": 11338,
+      "sha256": "41d77788f4f5e8caf81fa23fcf030ea37dac80c449d4170df892a58b42d261ba"
     }
   ]
 }

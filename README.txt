@@ -170,3 +170,8 @@ Manrope font: SIL Open Font License, manrope-OFL.txt.
 USGS/USDA imagery is public-domain geographic imagery, with attribution
 retained. Building and bridge source attribution: EBRGIS, Department of
 Information Services. The standalone HTML includes the license notices.
+
+VERSION 2.4 SHORELINE DETAIL
+See terrain-detail-provenance.json for the bounded downtown 2 m elevation export,
+source catalog, NAVD88 reference, shoreline blending and exact coverage.
+See docs/validation.md for regression evidence and outstanding visual QA.

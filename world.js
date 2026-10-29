@@ -88,10 +88,12 @@
     const sunDirection=new T.Vector3();
     const water=new T.Water(root.BRScene.waterGeometry(),{textureWidth:512,textureHeight:512,waterNormals:normal,sunDirection,sunColor:0xffe8ba,waterColor:0x626044,distortionScale:2.8,fog:true,alpha:1});
     water.material.fragmentShader=water.material.fragmentShader.replace('float rf0 = 0.3;', 'float rf0 = 0.025;').replace('vec3 albedo = mix( ( sunColor * diffuseLight * 0.3 + scatter ) * getShadowMask(), ( vec3( 0.1 ) + reflectionSample * 0.9 + reflectionSample * specularLight ), reflectance);','vec3 albedo = mix( waterColor * ( vec3(0.65) + diffuseLight * 0.22 ) * getShadowMask(), reflectionSample * vec3(0.68,0.69,0.58) * 0.55 + waterColor * 0.19, reflectance * 0.82 ) + specularLight * 0.3;');
+    water.material.uniforms.riverChop={value:.55};
+    water.material.fragmentShader=water.material.fragmentShader.replace('uniform float size;', 'uniform float size; uniform float riverChop;').replace('noise.xzy * vec3( 1.5, 1.0, 1.5 )','noise.xzy * vec3( riverChop, 1.0, riverChop )');
     water.rotation.x=-Math.PI/2;water.position.y=0;scene.add(water);
     // The water's repeated detail is generated entirely offline; a broad low
     // frequency layer and fine short waves break up the planar reflection.
-    water.material.uniforms.size.value=1.1;
+    water.material.uniforms.size.value=3.2;
     const clouds=new T.Mesh(new T.PlaneGeometry(48000,48000),new T.MeshBasicMaterial({map:cloudTexture(),transparent:true,opacity:.47,depthWrite:false,color:0xfff7e7,side:T.DoubleSide,fog:false}));
     clouds.rotation.x=-Math.PI/2;clouds.position.y=2300;clouds.renderOrder=1;scene.add(clouds);
 
@@ -101,14 +103,15 @@
 
     const pmrem=new T.PMREMGenerator(renderer);let environment=null,currentWeather='';
     const presets={
-      golden:{elevation:8.5,azimuth:132,turbidity:4.2,rayleigh:2.2,fog:0xbab29b,density:.000078,sun:0xffdb9c,intensity:3.0,hemi:1.35,water:0x626044,distortion:2.6,cloud:.19},
-      morning:{elevation:27,azimuth:112,turbidity:3.6,rayleigh:2,fog:0xa6b9bd,density:.000085,sun:0xfff0d6,intensity:3.0,hemi:1.7,water:0x596354,distortion:2.5,cloud:.22},
+      golden:{elevation:8.5,azimuth:132,turbidity:4.2,rayleigh:2.2,fog:0xbab29b,density:.000078,sun:0xffdb9c,intensity:3.0,hemi:1.35,water:0x64583e,distortion:1.25,cloud:.19},
+      morning:{elevation:27,azimuth:112,turbidity:3.6,rayleigh:2,fog:0xa6b9bd,density:.000085,sun:0xfff0d6,intensity:3.0,hemi:1.7,water:0x5e6458,distortion:1.1,cloud:.22},
       storm:{elevation:18,azimuth:140,turbidity:15,rayleigh:.65,fog:0x788a87,density:.00023,sun:0xc8d2cd,intensity:1.1,hemi:1.55,water:0x374e47,distortion:6.7,cloud:.88}
     };
     function setWeather(input){
       const name=typeof input==='string'?input:(input&&input.name)||'golden';if(name===currentWeather)return;currentWeather=name;
       const p=presets[name]||presets.golden;sunDirection.setFromSphericalCoords(1,T.MathUtils.degToRad(90-p.elevation),T.MathUtils.degToRad(p.azimuth));
       skyU.sunPosition.value.copy(sunDirection);skyU.turbidity.value=p.turbidity;skyU.rayleigh.value=p.rayleigh;
+      water.material.uniforms.riverChop.value=name==='storm'?1.35:name==='morning'?.4:.55;
       water.material.uniforms.sunDirection.value.copy(sunDirection);water.material.uniforms.sunColor.value.setHex(p.sun);water.material.uniforms.waterColor.value.setHex(p.water);water.material.uniforms.distortionScale.value=p.distortion;
       sun.color.setHex(p.sun);sun.intensity=p.intensity;hemi.intensity=p.hemi;scene.fog=new T.FogExp2(p.fog,p.density);clouds.material.opacity=p.cloud;
       // Sky-derived image-based light makes every hull, tank and window belong
