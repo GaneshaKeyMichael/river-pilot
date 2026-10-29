@@ -50,7 +50,17 @@
       "genericBuildingsRendered": 5352,
       "rawFootprintsReplacedByCustomModels": 256,
       "countReconciliation": "5617 raw source records = 5352 generic buildings + 256 custom-model replacements + 9 unsupported omissions. A replacement count describes source records, not the number of meshes or individual decorative model parts.",
-      "unsupportedGenericFootprintIds": [337085, 337084, 337083, 303148, 238187, 238188, 238186, 160843, 303149],
+      "unsupportedGenericFootprintIds": [
+        337085,
+        337084,
+        337083,
+        303148,
+        238187,
+        238188,
+        238186,
+        160843,
+        303149
+      ],
       "omissionBreakdown": "Seven footprints have no rendered land at their center; two additional footprints cross unsupported shoreline terrain.",
       "omissionRule": "Omit a generic extrusion if its center or sampled perimeter has no rendered land support. Mapped water polygons are not filled with land to support a building.",
       "detailedSubstitutions": "Selected civic, refinery and hotel footprints are excluded from generic extrusions and replaced with landmark models. The 252 circular refinery equipment footprints are part of the raw 5617-record export, not additional survey records.",
@@ -60,14 +70,24 @@
   "terrainAndLevees": {
     "provider": "USGS 3DEP",
     "url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
-    "sourceExportResolutionMetres": [13.816242603710938, 13.814195254765187],
+    "sourceExportResolutionMetres": [
+      13.816242603710938,
+      13.814195254765187
+    ],
     "sourceMetadata": "br-terrain-summary.json",
     "baseMeshMetadata": "br-terrain-mesh-summary.json",
     "nearBankBaseMeshSpacingMetres": 14,
     "localRefinement": "Subdivide existing land triangles with centers within 25 m of mapped levee alignments. Interior midpoints sample the same 13.8 m DEM; boundary midpoints preserve the existing triangle edge height to avoid seams.",
     "verticalScale": 1,
     "waterStageReferenceMetres": 4,
-    "limits": "Refinement improves interpolation of existing elevations; it is not a higher-resolution survey and does not establish exact levee crest elevations. Narrow stairs, paths, retaining walls and present-day flood protection conditions are not resolved. The gameplay water stage is not a live gauge reading. Mapped shoreline adaptation in the base mesh is documented separately in br-terrain-mesh-summary.json."
+    "limits": "Refinement improves interpolation of existing elevations; it is not a higher-resolution survey and does not establish exact levee crest elevations. Narrow stairs, paths, retaining walls and present-day flood protection conditions are not resolved. The gameplay water stage is not a live gauge reading. Mapped shoreline adaptation in the base mesh is documented separately in br-terrain-mesh-summary.json.",
+    "downtownDetail": {
+      "provenance": "terrain-detail-provenance.json",
+      "exportSpacingMetres": 2,
+      "coverage": "Land within 500 m of mapped water inside local X 400–2300, Z -3500–1500.",
+      "waterStageReferenceMetres": 4,
+      "limits": "Historical source mosaic. Native 1 m source verified at one downtown reference point; shoreline transition and export boundary are blended. Not a present-day survey."
+    }
   },
   "bridgeAxes": {
     "url": "https://maps.brla.gov/gis/rest/services/Infrastructure/Bridge/MapServer/0",

@@ -145,7 +145,7 @@
     return {x,z,fx,fz,rx,rz};
   }
   function stepFanBoat(state,input,dt,river,traffic){
-    const beforeX=state.x,beforeZ=state.z;
+    const beforeX=state.x,beforeZ=state.z,beforeHeading=state.heading;
     state.collisionCooldown=Math.max(0,finite(state.collisionCooldown)-dt);state.collision=false;
     const desired=state.hull>0?clamp(finite(input.throttle),-.4,1):0;
     state.throttle=approach(state.throttle,desired,1.35,dt);
@@ -175,9 +175,9 @@
     const bankTangent=river.sample(projection.s),normalX=-bankTangent.tz,normalZ=bankTangent.tx;
     const sideExtent=Math.abs(velocity.fx*normalX+velocity.fz*normalZ)*PLAYER_SPEC.length*.5+Math.abs(velocity.rx*normalX+velocity.rz*normalZ)*PLAYER_SPEC.width*.5;
     const leftLimit=Math.max(1,sideWidth(projection,-1)-sideExtent-.35),rightLimit=Math.max(1,sideWidth(projection,1)-sideExtent-.35);
-    state.grounded=projection.offset<-leftLimit+3||projection.offset>rightLimit-3;
+    state.grounded=!river.hullInWater&&(projection.offset<-leftLimit+3||projection.offset>rightLimit-3);
     if(state.grounded){state.speed*=Math.exp(-2.4*dt);state.lateralSpeed*=Math.exp(-4*dt);}
-    if(projection.offset<-leftLimit||projection.offset>rightLimit){
+    if(!river.hullInWater&&(projection.offset<-leftLimit||projection.offset>rightLimit)){
       const p=river.sample(projection.s),side=projection.offset<0?-1:1,offset=side<0?-leftLimit:rightLimit;
       const crossing=Math.max(0,vx*(-p.tz)*side+vz*p.tx*side);
       state.x=p.x-p.tz*offset;state.z=p.z+p.tx*offset;
@@ -214,6 +214,7 @@
     // Bound contact corrections as well as thrust/current motion: no frame teleport.
     const dx=state.x-beforeX,dz=state.z-beforeZ,distance=Math.hypot(dx,dz),budget=PLAYER_SPEC.maxSpeedMps*dt;
     if(distance>budget){state.x=beforeX+dx*budget/distance;state.z=beforeZ+dz*budget/distance;}
+    constrainMappedShore(state,{x:beforeX,z:beforeZ,heading:beforeHeading},river,dt);
     state.groundSpeed=Math.min(PLAYER_SPEC.maxSpeedMps,Math.hypot(state.x-beforeX,state.z-beforeZ)/dt);
     projection=river.project(state.x,state.z);state.s=projection.s;
     state.bankDistance=Math.min(sideWidth(projection,-1)+projection.offset,sideWidth(projection,1)-projection.offset);
@@ -223,6 +224,22 @@
     state.wakeStrength=clamp(Math.abs(state.speed)/PLAYER_SPEC.maxSpeedMps,0,1);
     const power=state.throttle<0?Math.abs(state.throttle)/.4:state.throttle;
     state.engineRPM=PLAYER_SPEC.idleRPM+(PLAYER_SPEC.maxRPM-PLAYER_SPEC.idleRPM)*Math.sqrt(clamp(power,0,1));
+  }
+  function constrainMappedShore(state,before,river,dt){
+    if(!river.hullInWater||river.hullInWater(state.x,state.z,state.heading,PLAYER_SPEC.length,PLAYER_SPEC.width))return;
+    const targetX=state.x,targetZ=state.z,turn=Math.atan2(Math.sin(state.heading-before.heading),Math.cos(state.heading-before.heading));
+    const vx=(targetX-before.x)/Math.max(dt,1e-6),vz=(targetZ-before.z)/Math.max(dt,1e-6);
+    const normals=river.shoreContact?.(targetX,targetZ,state.heading,PLAYER_SPEC.length,PLAYER_SPEC.width);
+    const impactSpeed=normals?normals.reduce((speed,n)=>Math.max(speed,vx*n.x+vz*n.z),0):Math.hypot(vx,vz);
+    let lo=0,hi=1;
+    if(river.hullInWater(before.x,before.z,before.heading,PLAYER_SPEC.length,PLAYER_SPEC.width)){
+      for(let i=0;i<12;i++){const t=(lo+hi)/2;
+        if(river.hullInWater(before.x+(targetX-before.x)*t,before.z+(targetZ-before.z)*t,before.heading+turn*t,PLAYER_SPEC.length,PLAYER_SPEC.width))lo=t;else hi=t;
+      }
+    }
+    state.x=before.x+(targetX-before.x)*lo;state.z=before.z+(targetZ-before.z)*lo;state.heading=before.heading+turn*lo;
+    impact(state,impactSpeed,.45);
+    state.speed*=Math.exp(-7*dt);state.lateralSpeed*=Math.exp(-7*dt);state.turnRate*=.5;state.grounded=true;
   }
   function rampFrame(ramp,x,z){const fx=-Math.sin(ramp.heading),fz=-Math.cos(ramp.heading),rx=Math.cos(ramp.heading),rz=-Math.sin(ramp.heading),dx=x-ramp.x,dz=z-ramp.z;return {fx,fz,rx,rz,along:dx*fx+dz*fz,side:dx*rx+dz*rz};}
   function rampSlope(ramp){return (finite(ramp.lipHeight,finite(ramp.height,4))-finite(ramp.entryHeight,-.28))/Math.max(1,finite(ramp.length,36));}
@@ -254,6 +271,8 @@
       const decay=Math.exp(-4*dt);state.x+=finite(state.anchorVX)*(1-decay)/4;state.z+=finite(state.anchorVZ)*(1-decay)/4;state.anchorVX*=decay;state.anchorVZ*=decay;state.anchorTimer+=dt;
       if(state.anchorTimer>=1.1||Math.hypot(state.anchorVX,state.anchorVZ)<.025){state.anchorState='down';state.anchorX=state.x;state.anchorZ=state.z;state.anchorVX=0;state.anchorVZ=0;}
     }else{state.x=finite(state.anchorX,state.x);state.z=finite(state.anchorZ,state.z);}
+    constrainMappedShore(state,{x,z,heading:state.heading},river,dt);
+    if(state.grounded){state.anchorState='up';state.anchorBreakEvent=true;}
     state.groundSpeed=Math.hypot(state.x-x,state.z-z)/dt;state.roll=approach(state.roll,0,3,dt);state.pitch=approach(state.pitch,0,3,dt);
     // An anchor resists current, not a moving vessel striking the hull.
     for(const body of traffic)if(bodyContact(state,body)){state.anchorState='up';state.anchorBreakEvent=true;impact(state,Math.abs(finite(body.speed)),1);break;}
@@ -349,7 +368,7 @@
       else if(state.groundedOnLand){zeroPower(state);state.grounded=true;if(Number.isInteger(state.restingBodyIndex)&&traffic[state.restingBodyIndex]){const body=traffic[state.restingBodyIndex];state.x=body.x+state.supportOffsetX;state.z=body.z+state.supportOffsetZ;state.y=bodyTop(body)+PLAYER_SPEC.draft;}state.groundSpeed=0;updatePositionInfo(state,river);}
       else if(state.airborne){state.collisionCooldown=Math.max(0,finite(state.collisionCooldown)-step);stepAir(state,input,step,river,traffic);}
       else if(state.onRamp){state.collisionCooldown=Math.max(0,finite(state.collisionCooldown)-step);stepRamp(state,input,step,river,traffic);}
-      else{const before={x:state.x,z:state.z};state.y=0;state.vy=0;stepFanBoat(state,input,step,river,traffic);meetRamps(state,before,input,step,river,traffic);}
+      else{const before={x:state.x,z:state.z,heading:state.heading};state.y=0;state.vy=0;stepFanBoat(state,input,step,river,traffic);meetRamps(state,before,input,step,river,traffic);if(!state.onRamp&&!state.airborne){constrainMappedShore(state,before,river,step);state.groundSpeed=Math.min(PLAYER_SPEC.maxSpeedMps,Math.hypot(state.x-before.x,state.z-before.z)/step);updatePositionInfo(state,river);}}
       collided=collided||state.collision;
     }
     state.collision=collided;state.physicsSubsteps=steps;return state;

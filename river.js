@@ -33,5 +33,5 @@
   }
   function currentAt(x,z){const p=project(x,z),v=sample(p.s),half=p.offset>=0?p.rightWidth:p.leftWidth,f=clamp(Math.abs(p.offset)/half,0,1),speed=(1.2+.15*Math.sin(p.s/3800))*(1-.3*f*f);return {x:v.tx*speed,z:v.tz*speed,speed};}
   function bankAt(s,side){const p=sample(s),distance=side<0?p.leftWidth:p.rightWidth;return {x:p.x-p.tz*distance*side,z:p.z+p.tx*distance*side};}
-  root.RIVER={points,length,sample,project,currentAt,bankAt,startS:0,finishS:length,landmarks:G.landmarks,bridges:G.bridges,scope:'East Baton Rouge Parish Mississippi riverfront',projection:'EPSG:26915',scale:1,toWorld:G.toWorld,toLonLat:G.toLonLat};
+  root.RIVER={hullInWater:root.RIVER_SHORE?.hullInWater,shoreContact:root.RIVER_SHORE?.contact,points,length,sample,project,currentAt,bankAt,startS:0,finishS:length,landmarks:G.landmarks,bridges:G.bridges,scope:'East Baton Rouge Parish Mississippi riverfront',projection:'EPSG:26915',scale:1,toWorld:G.toWorld,toLonLat:G.toLonLat};
 })(globalThis);

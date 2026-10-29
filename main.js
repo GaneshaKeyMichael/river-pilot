@@ -254,7 +254,7 @@ try{
   if(!stops.some(stop=>/Downtown levee/.test(stop.name))){const target={x:891.882,y:9.954,z:-432.756};stops.push({name:'Downtown levee & riverwalk',s:RIVER.project(target.x,target.z).s,lookAt:target,viewPosition:{x:600.1,z:-422.4},viewDistance:290,cameraHeight:14});}
   stops.sort((a,b)=>a.s-b.s);locationStops=stops;syncRampLocation();
   renderer.compile(scene,camera);renderer.render(scene,camera);animate();Promise.resolve(world.ready).then(()=>{$('loading').hidden=true;$('welcome').hidden=false;}).catch(fail);
-  window.RiverPilot={getState:()=>({mode,paused:paused||isPaused(),weather,camera:landmarkView?'Landmark view':camNames[cameraMode],landmark:landmarkView?.name||null,checkpoint,throttle,gear,effectiveGear,currentKnots,x:state.x,z:state.z,s:state.s,speed:state.speed,hull:state.hull}),version:'2.3-anchor-ramps'};
+  window.RiverPilot={getState:()=>({mode,paused:paused||isPaused(),weather,camera:landmarkView?'Landmark view':camNames[cameraMode],landmark:landmarkView?.name||null,checkpoint,throttle,gear,effectiveGear,currentKnots,x:state.x,z:state.z,s:state.s,speed:state.speed,hull:state.hull}),version:'2.4-shoreline-detail'};
 }catch(error){fail(error);}
 })();
 
