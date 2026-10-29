@@ -175,3 +175,16 @@ VERSION 2.4 SHORELINE DETAIL
 See terrain-detail-provenance.json for the bounded downtown 2 m elevation export,
 source catalog, NAVD88 reference, shoreline blending and exact coverage.
 See docs/validation.md for regression evidence and outstanding visual QA.
+
+VERSION 2.5 MAP AUDIT AND CAMERA STABILITY
+External cameras now stay above the visible terrain at their sampled position,
+including after camera smoothing. Helm view remains attached to the vessel.
+Graphics-quality changes retain the last valid aerial texture until each
+replacement loads; failed replacements can retry without blanking the scenery.
+
+The geographic audit is summarized in docs/geographic-audit.md. It identifies
+west-bank building gaps, mixed source dates, modeled heights, and priority port
+landmarks. Comparison building data and newer 2025 aerials were used for audit
+only and are not included in the game. The game remains a historical, mixed-date
+reconstruction with simulated water stage. Neither every building nor the full
+river journey has been visually certified.
